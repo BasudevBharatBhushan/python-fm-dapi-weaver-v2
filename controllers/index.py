@@ -1,44 +1,36 @@
 from fastapi import FastAPI, Request, Response
-from .auth import validate_session, validate_token
+from .auth import validate_session, validate_token,signin,signout
 from .records import (
     create_record,
     get_all_records,
     find_record,
     update_record,
+    delete_record
 )
 
-controllers_to_skip_validation = []
+controllers_to_skip_validation = ["signin"]
+METHOD_HANDLERS = {
+    "createRecord": create_record,
+    "getAllRecords": get_all_records,
+    "findRecord": find_record,
+    "updateRecord": update_record,
+    "deleteRecord": delete_record,
+    "signin": signin,
+    "signout" : signout
+    
+}
 
 
 async def data_api(req: Request, res: Response):
-    method = req.get("method")
-
-    print("In this function", res.headers)
-
-    # Check if the method should skip validation
+    method = req.state.body.get("method")
+    if method not in METHOD_HANDLERS:
+        return {"error": f"Invalid method ${method}"}
     if method not in controllers_to_skip_validation:
-        # If the method is not in the skip list, apply the validateToken middleware first
-        await validate_token(req, res)
-        
+        # If the method is not in the skip list, apply the validateToken  first
+        await validate_token(req)        
         # After token validation, apply the validateSession middleware
-        await validate_session(req, res)
+        await validate_session(req)
+               
+    handler = METHOD_HANDLERS[method]
+    return await handler(req)
 
-    # Once validated, call the appropriate controller method
-    if method == "createRecord":
-        return await create_record(req)
-    # elif method == "getRecordById":
-    #     return await get_record_by_id(req)
-    elif method == "getAllRecords":
-        return await get_all_records(req)
-    elif method == "findRecord":
-        return await find_record(req)
-    # elif method == "executeScript":
-    #     return await execute_script(req)
-    elif method == "updateRecord":
-        return await update_record(req)
-    # elif method == "test":
-    #     return await test(req)
-    # elif method == "syncCollection":
-    #     return await sync_collection(req)
-    else:
-        return {"error": "Invalid method"}
