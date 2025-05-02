@@ -1,6 +1,8 @@
 import requests
 import json
-from fastapi import APIRouter, HTTPException, Request
+import base64
+from fastapi import APIRouter, HTTPException, Request, UploadFile, File, Form
+from utils.error_handler import handle_api_error
 
 async def create_record(req: Request):
     data = req.state.body
@@ -10,6 +12,20 @@ async def create_record(req: Request):
     database = method_body.get("database")
     layout = method_body.get("layout") 
     fm_server = data.get("fmServer") 
+
+    required_params = {
+        "fmSessionToken": token,
+        "fmServer": fm_server,
+        "database": database,
+        "layout": layout,
+        "record": record
+
+    }
+
+    missing_params = [key for key, value in required_params.items() if not value]
+    if missing_params:
+        raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")    
+
     apiUrl = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/layouts/{layout}/records"
     headers = {
         "Content-Type": "application/json",
@@ -31,10 +47,7 @@ async def create_record(req: Request):
             "session": token
         }
     except requests.HTTPError as e:
-        error_message = "An error occurred while creating the record."
-        if e.response:
-            error_message = e.response.json()
-        raise HTTPException(status_code=500, detail=error_message)
+        raise handle_api_error(e,"An error occurred while creating the record.")
 
 
 async def get_all_records(request: Request):
@@ -46,6 +59,17 @@ async def get_all_records(request: Request):
     fm_server = data.get("fmServer") 
     offset = method_body.get("offset")
     limit =  method_body.get("limit")
+
+    required_params = {
+        "fmSessionToken": token,
+        "fmServer": fm_server,
+        "database": database,
+        "layout": layout
+    }
+
+    missing_params = [key for key, value in required_params.items() if not value]
+    if missing_params:
+        raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")
 
     apiUrl = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/layouts/{layout}/records"
 
@@ -79,10 +103,7 @@ async def get_all_records(request: Request):
                 "session": token
             }
     except requests.HTTPError as e:
-        error_message = "An error occurred while fetching the record."
-        if e.response:
-            error_message = e.response.json()
-        raise HTTPException(status_code=500, detail=error_message)
+        raise handle_api_error(e,"An error occurred while fetching the records.")
 
 
 async def update_record(req:Request):
@@ -95,6 +116,17 @@ async def update_record(req:Request):
     database = method_body.get("database")
     layout = method_body.get("layout") 
     record_id = method_body.get("recordId")
+    required_params = {
+        "fmSessionToken": token,
+        "fmServer": fm_server,
+        "database": database,
+        "layout": layout,
+        "recordId": record_id,
+    }
+
+    missing_params = [key for key, value in required_params.items() if not value]
+    if missing_params:
+        raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")
 
 
     apiUrl = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/layouts/{layout}/records/{record_id}"
@@ -119,10 +151,7 @@ async def update_record(req:Request):
             "session": token
         }
     except requests.HTTPError as e:
-        error_message = "An error occurred while updating the record."
-        if e.response:
-            error_message = e.response.json()
-        raise HTTPException(status_code=500, detail=error_message)
+        raise handle_api_error(e,"An error occurred while updating the record.")
 
 
 async def find_record(req: Request):
@@ -133,6 +162,17 @@ async def find_record(req: Request):
     database = method_body.get("database")
     layout = method_body.get("layout") 
     fm_server = data.get("fmServer") 
+
+    required_params = {
+        "fmSessionToken": token,
+        "fmServer": fm_server,
+        "database": database,
+        "layout": layout
+    }
+
+    missing_params = [key for key, value in required_params.items() if not value]
+    if missing_params:
+        raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")
 
     request_body = {
         "query": method_body.get("query"),
@@ -184,11 +224,7 @@ async def find_record(req: Request):
                 "session": token
             }
     except requests.HTTPError as e:
-        print(e)
-        error_message = "An error occurred while fetching the record."
-        if e.response:
-            error_message = e.response.json()
-        raise HTTPException(status_code=500, detail=error_message)
+        raise handle_api_error(e,"An error occurred while fetching the record.")
 
 async def delete_record(req: Request):
     data = req.state.body
@@ -198,6 +234,18 @@ async def delete_record(req: Request):
     layout = method_body.get("layout")
     record_id = method_body.get("recordId")
     fm_server = data.get("fmServer")
+
+    required_params = {
+        "fmSessionToken": token,
+        "fmServer": fm_server,
+        "database": database,
+        "layout": layout,
+        "recordId": record_id,
+    }
+
+    missing_params = [key for key, value in required_params.items() if not value]
+    if missing_params:
+        raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")
 
     if not all([database, layout, record_id, fm_server]):
         raise HTTPException(status_code=400, detail="Missing required parameters")
@@ -219,11 +267,68 @@ async def delete_record(req: Request):
         }
 
     except requests.HTTPError as e:
-        error_message = "An error occurred while deleting the record."
-        if e.response:
-            try:
-                error_message = e.response.json()
-            except Exception:
-                error_message = "Unknown error while deleting"
-        raise HTTPException(status_code=500, detail=error_message)
+        raise handle_api_error(e,"An error occurred while deleting the record.")
  
+async def upload_container(req: Request):
+    try:
+        file_info = getattr(req.state, "file", None)
+        if not file_info:
+            raise HTTPException(status_code=400, detail="No file uploaded")
+        file_content = file_info["data"]
+        file_name = file_info["filename"]
+        file_type = file_info["content_type"]
+
+        files = {
+            'upload': (file_name, file_content, file_type)
+        }
+        data = req.state.body
+        token = data.get("fmSessionToken") 
+        fm_server = data.get("fmServer")
+        method_body = data.get("methodBody", {})
+        database = method_body.get("database")
+        layout = method_body.get("layout")
+        record_id = method_body.get("recordId")
+        field_name = method_body.get("fieldName")
+
+        required_params = {
+            "fmSessionToken": token,
+            "fmServer": fm_server,
+            "database": database,
+            "layout": layout,
+            "recordId": record_id,
+            "fieldName": field_name,
+        }
+        missing_params = [key for key, value in required_params.items() if not value]
+        if missing_params:
+            raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")
+
+        api_url = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/layouts/{layout}/records/{record_id}/containers/{field_name}"
+
+        headers = {
+            "Authorization": f"Bearer {token}"
+        }
+
+        try:
+            response = requests.post(
+                    api_url,
+                    files=files,
+                    headers=headers,
+                    verify=False 
+            )
+            response.raise_for_status()
+
+            return {
+                    "status": "uploaded",
+                    "recordId": record_id,
+                    "fieldName": field_name,
+                    "fileName": file_name,
+                    "session": token
+            }
+
+        except requests.HTTPError as e:
+            raise handle_api_error(e,"An error occurred while uploading the file.")
+
+    except Exception as e:
+
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+

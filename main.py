@@ -1,6 +1,8 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter,HTTPException,UploadFile
 from starlette.responses import Response
 from routes.index import router
+import json
+
 
 app = FastAPI()
 
@@ -11,15 +13,39 @@ app.include_router(router, prefix="/api")
 async def home():
     return "Python-dapi-server is running"
 
-
-# Middleware equivalent - Similar to app.use() in Express
 @app.middleware("http")
-async def custom_middleware(request, call_next):
-    if request.headers.get("Content-Type") == "application/json":
+async def body_parser(request, call_next):
+    content_type = request.headers.get("Content-Type", "")
+    print(content_type)
+
+    if "application/json" in content_type:
+        request.state.body = await request.json()
+    elif "multipart/form-data" in content_type:
+        form = await request.form()
+
+        json_data = form.get("data")
+        if not json_data:
+            raise HTTPException(status_code=400, detail="Missing 'data' in form")
         try:
-            request.state.body = await request.json()
-        except Exception as e:
-           raise HTTPException(status_code=400, detail="Invalid JSON")
+            request.state.body = json.loads(json_data)
+        except json.JSONDecodeError:
+            raise HTTPException(status_code=400, detail="Invalid JSON in 'data'")
+        file: UploadFile = form.get("file")
+        
+        if not file:
+            raise HTTPException(status_code=400, detail="No file provided")
+        else:
+            
+            try:
+                contents = await file.read()
+                request.state.file = {
+                    "filename": file.filename,
+                    "content_type": file.content_type,
+                    "data": contents
+                }            
+            except Exception as e:
+                raise HTTPException(status_code=400, detail=f"Failed to read file: {str(e)}")
+            
     return await call_next(request)
 
 # Run the server
