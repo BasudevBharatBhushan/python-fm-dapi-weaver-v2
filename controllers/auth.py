@@ -1,9 +1,6 @@
 from fastapi import FastAPI, HTTPException, Header, Request, APIRouter
 from starlette.responses import JSONResponse
 import requests
-from typing import Annotated
-
-
 
 async def validate_token(req: Request):
     print("reaching here---validateToken")
@@ -68,8 +65,6 @@ async def validate_session(req: Request):
                     return JSONResponse(status_code=401, content={"error": "Invalid session token"})
         except Exception as error:
             return JSONResponse(status_code=401, content={"error": "Session validation failed"})
-
-
 
 async def signin(req: Request):
   try:

@@ -5,7 +5,8 @@ from .records import (
     get_all_records,
     find_record,
     update_record,
-    delete_record
+    delete_record,
+    upload_container
 )
 
 controllers_to_skip_validation = ["signin"]
@@ -16,7 +17,8 @@ METHOD_HANDLERS = {
     "updateRecord": update_record,
     "deleteRecord": delete_record,
     "signin": signin,
-    "signout" : signout
+    "signout" : signout,
+    "uploadContainer":upload_container
     
 }
 
