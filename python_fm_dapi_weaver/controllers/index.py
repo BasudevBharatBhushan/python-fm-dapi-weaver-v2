@@ -9,7 +9,11 @@ from .records import (
     upload_container
 )
 
+# List of method names that do not require token/session validation.
 controllers_to_skip_validation = ["signin"]
+
+
+# Mapping of method names to their corresponding handler functions
 METHOD_HANDLERS = {
     "createRecord": create_record,
     "getAllRecords": get_all_records,

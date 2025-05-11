@@ -2,29 +2,25 @@ import requests
 import json
 import base64
 from fastapi import APIRouter, HTTPException, Request, UploadFile, File, Form
-from utils.error_handler import handle_api_error
+from ..utils.helpers import handle_api_error,validate_required_params
 
 async def create_record(req: Request):
     data = req.state.body
-    token = data.get("fmSessionToken")
+    token =   req.state.fmSessionToken
     method_body = data.get("methodBody", {})
     record = method_body.get("record")
     database = method_body.get("database")
     layout = method_body.get("layout") 
     fm_server = data.get("fmServer") 
 
-    required_params = {
+    validate_required_params({
         "fmSessionToken": token,
         "fmServer": fm_server,
         "database": database,
         "layout": layout,
         "record": record
 
-    }
-
-    missing_params = [key for key, value in required_params.items() if not value]
-    if missing_params:
-        raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")    
+    })
 
     apiUrl = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/layouts/{layout}/records"
     headers = {
@@ -46,13 +42,14 @@ async def create_record(req: Request):
             "fieldData": record,
             "session": token
         }
+        
     except requests.HTTPError as e:
         raise handle_api_error(e,"An error occurred while creating the record.")
 
 
-async def get_all_records(request: Request):
-    data = request.state.body
-    token = data.get("fmSessionToken")
+async def get_all_records(req: Request):
+    data = req.state.body
+    token =  req.state.fmSessionToken
     method_body = data.get("methodBody", {})
     database = method_body.get("database")
     layout = method_body.get("layout")  
@@ -60,17 +57,14 @@ async def get_all_records(request: Request):
     offset = method_body.get("offset")
     limit =  method_body.get("limit")
 
-    required_params = {
+    validate_required_params({
         "fmSessionToken": token,
         "fmServer": fm_server,
         "database": database,
         "layout": layout
-    }
+    })
 
-    missing_params = [key for key, value in required_params.items() if not value]
-    if missing_params:
-        raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")
-
+    
     apiUrl = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/layouts/{layout}/records"
 
     headers = {
@@ -92,12 +86,15 @@ async def get_all_records(request: Request):
                  "recordId": record["recordId"],
                  **record["fieldData"]
                  } for record in json_data["response"]["data"]]
+
             record_info = json_data["response"]["dataInfo"]
+
             return {
                 "recordInfo": {
                     "table": record_info["table"],
                     "layout": record_info["layout"],
-                    "totalRecordCount": record_info["totalRecordCount"]
+                    "totalRecordCount": record_info["totalRecordCount"],
+                    "foundCount": record_info["foundCount"],
                 },
                 "records": records,
                 "session": token
@@ -109,25 +106,22 @@ async def get_all_records(request: Request):
 async def update_record(req:Request):
 
     data = req.state.body
-    token = data.get("fmSessionToken")
+    token =   req.state.fmSessionToken
     fm_server = data.get("fmServer") 
     method_body = data.get("methodBody", {})
     record = method_body.get("record")
     database = method_body.get("database")
     layout = method_body.get("layout") 
     record_id = method_body.get("recordId")
-    required_params = {
+    validate_required_params({
         "fmSessionToken": token,
         "fmServer": fm_server,
         "database": database,
         "layout": layout,
         "recordId": record_id,
-    }
+    })
 
-    missing_params = [key for key, value in required_params.items() if not value]
-    if missing_params:
-        raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")
-
+   
 
     apiUrl = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/layouts/{layout}/records/{record_id}"
 
@@ -157,23 +151,20 @@ async def update_record(req:Request):
 async def find_record(req: Request):
 
     data = req.state.body
-    token = data.get("fmSessionToken")
+    token =   req.state.fmSessionToken
     method_body = data.get("methodBody", {})
     database = method_body.get("database")
     layout = method_body.get("layout") 
     fm_server = data.get("fmServer") 
 
-    required_params = {
+    validate_required_params({
         "fmSessionToken": token,
         "fmServer": fm_server,
         "database": database,
         "layout": layout
-    }
+    })
 
-    missing_params = [key for key, value in required_params.items() if not value]
-    if missing_params:
-        raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")
-
+   
     request_body = {
         "query": method_body.get("query"),
         "sort": method_body.get("sort"),
@@ -218,7 +209,8 @@ async def find_record(req: Request):
                 "recordInfo": {
                     "table": record_info["table"],
                     "layout": record_info["layout"],
-                    "totalRecordCount": record_info["foundCount"]
+                    "totalRecordCount": record_info["totalRecordCount"],
+                    "foundCount": record_info["foundCount"],
                 },
                 "records": records,
                 "session": token
@@ -228,25 +220,22 @@ async def find_record(req: Request):
 
 async def delete_record(req: Request):
     data = req.state.body
-    token = data.get("fmSessionToken")
+    token =   req.state.fmSessionToken
     method_body = data.get("methodBody", {})
     database = method_body.get("database")
     layout = method_body.get("layout")
     record_id = method_body.get("recordId")
     fm_server = data.get("fmServer")
 
-    required_params = {
+    validate_required_params({
         "fmSessionToken": token,
         "fmServer": fm_server,
         "database": database,
         "layout": layout,
         "recordId": record_id,
-    }
+    })
 
-    missing_params = [key for key, value in required_params.items() if not value]
-    if missing_params:
-        raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")
-
+    
     if not all([database, layout, record_id, fm_server]):
         raise HTTPException(status_code=400, detail="Missing required parameters")
 
@@ -282,7 +271,7 @@ async def upload_container(req: Request):
             'upload': (file_name, file_content, file_type)
         }
         data = req.state.body
-        token = data.get("fmSessionToken") 
+        token =   req.state.fmSessionToken 
         fm_server = data.get("fmServer")
         method_body = data.get("methodBody", {})
         database = method_body.get("database")
@@ -290,17 +279,14 @@ async def upload_container(req: Request):
         record_id = method_body.get("recordId")
         field_name = method_body.get("fieldName")
 
-        required_params = {
+        validate_required_params({
             "fmSessionToken": token,
             "fmServer": fm_server,
             "database": database,
             "layout": layout,
             "recordId": record_id,
             "fieldName": field_name,
-        }
-        missing_params = [key for key, value in required_params.items() if not value]
-        if missing_params:
-            raise HTTPException(status_code=400, detail=f"Missing required parameters: {', '.join(missing_params)}")
+        })
 
         api_url = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/layouts/{layout}/records/{record_id}/containers/{field_name}"
 
