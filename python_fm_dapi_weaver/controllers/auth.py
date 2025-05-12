@@ -2,9 +2,10 @@ from fastapi import FastAPI, HTTPException, Header, Request, APIRouter
 from starlette.responses import JSONResponse
 import requests
 
+# Validates the 'Authorization' header and extracts the Basic Auth token
 async def validate_token(req: Request):
-    print("reaching here---validateToken")
     auth_header = req.headers.get("Authorization")
+
 
     if not auth_header:
         raise HTTPException(status_code=401, detail="Authorization header is missing")
@@ -13,12 +14,13 @@ async def validate_token(req: Request):
 
     if len(auth_header_parts) != 2 or auth_header_parts[0].lower() != "basic":
         raise HTTPException(status_code=400, detail="Invalid Authorization header format")
+    # Save token to request.state for future use
+    req.state.basicAuthToken = auth_header_parts[1]
+    
 
-    req.basicAuthToken = auth_header_parts[1]
-
-
+# Validates the session 
 async def validate_session(req: Request):
-    basic_auth_token = req.basicAuthToken
+    basic_auth_token = req.state.basicAuthToken
     body= req.state.body
     session = body.get("session", {})
     token = session.get("token")
@@ -30,12 +32,13 @@ async def validate_session(req: Request):
 
     if not session or not token:
         try:
+            # If session or token is missing, attempt to login and validate session
             fm_session_token = await fm_login(fm_server, database, basic_auth_token)
 
             if fm_session_token:
                 is_session_valid = await fm_validate_session(fm_server, fm_session_token)
                 if is_session_valid:
-                    req.state.body["fmSessionToken"] = fm_session_token
+                     req.state.fmSessionToken = fm_session_token
 
                 else:
                     return JSONResponse(status_code=401, content={"error": "Session token validation failed"})
@@ -45,7 +48,7 @@ async def validate_session(req: Request):
         try:
             is_session_valid = await fm_validate_session(fm_server, token)
             if is_session_valid:
-                req.state.body["fmSessionToken"] = token
+                 req.state.fmSessionToken = token
             else:
                 if token:
                     try:
@@ -53,7 +56,7 @@ async def validate_session(req: Request):
                         if fm_session_token:
                             is_session_valid = await fm_validate_session(fm_server, fm_session_token)                            
                             if is_session_valid:
-                                 req.state.body["fmSessionToken"] = fm_session_token
+                                  req.state.fmSessionToken = fm_session_token
 
                             else:
                                 return JSONResponse(status_code=401, content={"error": "Re-validation of session token failed"})
@@ -69,7 +72,7 @@ async def validate_session(req: Request):
 async def signin(req: Request):
   try:
         await validate_token(req)
-        basic_auth_token = req.basicAuthToken
+        basic_auth_token = req.state.basicAuthToken
         body =req.state.body
         fm_server = body.get("fmServer")
         method_body = body.get("methodBody", {})
@@ -91,7 +94,6 @@ async def signin(req: Request):
         raise HTTPException(status_code=500, detail=f"Signin failed: {str(e)}")
 
 async def fm_login(fm_server, database, basic_auth_token):
-    print("reaching here---fmlogin")
     url = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/sessions"
     
     headers = {
@@ -113,8 +115,9 @@ async def fm_login(fm_server, database, basic_auth_token):
             response_json["error"] = error.response.json()
         raise response_json
 
+
+# Validates session token against the FileMaker server
 async def fm_validate_session(fm_server, session_token):
-    print("reaching here---fmValidateSession")
     url = f"https://{fm_server}/fmi/data/vLatest/validateSession"
 
     headers = {
@@ -136,8 +139,7 @@ async def signout(req: Request):
         method_body = body.get("methodBody", {})
         database = method_body.get("database")
         fm_server = body.get("fmServer")
-        token = body.get("fmSessionToken")
-
+        token = req.state.fmSessionToken
         if not (fm_server and database):
             raise HTTPException(status_code=400, detail="Missing fmServer, database.")
        

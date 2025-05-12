@@ -1,6 +1,6 @@
 from fastapi import FastAPI, APIRouter,HTTPException,UploadFile
 from starlette.responses import Response
-from routes.index import router
+from .routes.index import router
 import json
 
 
@@ -11,15 +11,18 @@ app.include_router(router, prefix="/api")
 # Routes
 @app.get("/")
 async def home():
-    return "Python-dapi-server is running"
+    return "server is running"
 
+# Middleware to parse request body
 @app.middleware("http")
 async def body_parser(request, call_next):
     content_type = request.headers.get("Content-Type", "")
-    print(content_type)
 
     if "application/json" in content_type:
+
+        # Parse the request body once and store it in request.state for easy access throughout the request 
         request.state.body = await request.json()
+        
     elif "multipart/form-data" in content_type:
         form = await request.form()
 
@@ -48,7 +51,10 @@ async def body_parser(request, call_next):
             
     return await call_next(request)
 
-# Run the server
-if __name__ == "__main__":
+
+def start_server(host="127.0.0.1", port=8000, reload=False):
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run("python_fm_dapi_weaver.main:app", host=host, port=port, reload=reload) 
+
+if __name__ == "__main__":
+    start_server(reload=True)  
