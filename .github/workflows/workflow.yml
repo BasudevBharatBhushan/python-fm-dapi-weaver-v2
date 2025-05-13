@@ -21,24 +21,10 @@ jobs:
           ref: master
           fetch-depth: 0
 
-      # - name: Create and push to main
-      #   run: |
-      #     git checkout -b main
-      #     git push origin main
-
-      - name: Create and push to release-main branch
+      - name: Create and push to main
         run: |
-          git checkout -b release-main
-          git push origin release-main
-
-      - name: Raise PR from release-main to main
-        uses: peter-evans/create-pull-request@v5
-        with:
-          base: main
-          head: release-main
-          title: "Automated Release PR: release-main -> main"
-          body: "This PR contains the automated changes for the release process."
-          branch: pr-release-main-to-main
+          git checkout -b main
+          git push origin main
 
       - name: Checkout release branch
         run: git checkout main
