@@ -41,7 +41,8 @@ jobs:
           branch: pr-release-main-to-main
 
       - name: Checkout release branch
-        run: git checkout main
+        # run: git checkout main
+        run: git checkout release-main
 
       - name: Set up Python
         uses: actions/setup-python@v3
