@@ -8,7 +8,12 @@ except FileNotFoundError:
 
 setup(
     name="python-fm-dapi-weaver",
-    version="0.1.0",
+    # version="0.1.0",
+    use_scm_version={"local_scheme": "no-local-version"},
+    setup_requires=[
+        "setuptools>=42",
+        "setuptools-scm",
+    ], 
     author="Mindfire Digital LLP",
     author_email="swathim@mindfiresolutions.com",
     description="A Python wrapper for seamless communication with FileMaker dababases.",    
