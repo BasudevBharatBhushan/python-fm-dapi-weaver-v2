@@ -10,7 +10,7 @@ A developer-friendly Python library for interacting with FileMaker Server via th
 - [Features](#features)
 - [How to Install](#how-to-install)
 - [How to Use](#how-to-use)
-- [API Structure Overview](#api-structure)
+- [API Structure](#api-structure)
 - [Contributing](#contributing)
 - [License](#license)
  
