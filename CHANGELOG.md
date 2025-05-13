@@ -1,65 +1,53 @@
-name: Upload Python Package
 
-on:
-push:
-branches: - master
+# Changelog
 
-permissions:
-contents: write
-id-token: write
-actions: write
-packages: write
+All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-jobs:
-release:
-runs-on: ubuntu-latest
-steps: - name: Checkout master branch
-uses: actions/checkout@v4
-with:
-ref: master
-fetch-depth: 0
+## [Unreleased]
 
-    - name: Create and push to main
-      run: |
-        git checkout -b main
-        git push origin main
+### Added
 
-    - name: Checkout release branch
-      run: git checkout main
+- [List new features or enhancements added but not yet released]
 
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.x'
+### Changed
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install build twine python-semantic-release setuptools-scm
+- [List changes, improvements, or modifications made but not yet released]
 
-    - name: Run semantic-release
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        semantic-release version
-        semantic-release publish
+### Fixed
 
-    - name: Build package
-      run: python -m build
+- [List bug fixes or corrections made but not yet released]
 
-    - name: Publish package to PyPI
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      run: twine upload dist/*
+## [Version] - YYYY-MM-DD
 
-    - name: Raise PR from main to master
-      uses: peter-evans/create-pull-request@v5
-      with:
-        base: master
-        head: main
-        title: 'Release PR: main -> master'
-        body: 'This PR merges the changes from the main branch back into master after the release.'
-        branch: pr-main-to-master
+### Added
+
+- [List new features or enhancements added in this version]
+
+### Changed
+
+- [List changes, improvements, or modifications made in this version]
+
+### Fixed
+
+- [List bug fixes or corrections made in this version]
+
+## [Older Versions]
+
+[Repeat the above sections for older versions of your project]
+
+## Contributing
+
+Please read [CONTRIBUTING.md](./contributing-template.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Authors
+
+- Author 1
+- Author 2
+
+## License
+
+This project is licensed under the [License Name] - see the [LICENSE.md](./license-template.md) file for details.
+
+## Customization
+
+You can customize this changelog to meet the specific needs and preferences of your project. Feel free to modify the structure, add more details, or change the formatting to better suit your project's versioning and documentation requirements.
