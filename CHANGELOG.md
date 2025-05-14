@@ -1,6 +1,9 @@
 # CHANGELOG
 
 
+## v0.2.0 (2025-05-14)
+
+
 ## v0.1.6 (2025-05-14)
 
 ### Bug Fixes
@@ -10,6 +13,11 @@
 
 - Updated workflow to run on main
   ([`7fabd12`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/7fabd12172e7c61dcdaff628a51b15399bd3b47e))
+
+### Features
+
+- Initial-release
+  ([`c52d83e`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/c52d83e554934b8428dd3b0bf2f9cb00b6f4f5d5))
 
 
 ## v0.1.5 (2025-05-14)
