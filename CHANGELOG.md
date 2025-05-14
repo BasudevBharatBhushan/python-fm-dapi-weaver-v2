@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.5 (2025-05-14)
+
+### Bug Fixes
+
+- Update workflow
+  ([`f34bd57`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/f34bd5724941817782111dda6089021b540292e7))
+
+
 ## v0.1.4 (2025-05-14)
 
 
