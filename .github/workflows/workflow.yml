@@ -52,7 +52,6 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           base: main
-          head: master
           title: "Release PR: master -> main"
           body: "This PR merges the changes from the master branch into main after the release."
           branch: pr-master-to-main
