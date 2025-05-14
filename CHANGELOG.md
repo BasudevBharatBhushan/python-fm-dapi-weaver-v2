@@ -1,7 +1,15 @@
 # CHANGELOG
 
 
+## v0.1.4 (2025-05-14)
+
+
 ## v0.1.3 (2025-05-14)
+
+### Bug Fixes
+
+- Update readme
+  ([`9b3ae8c`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/9b3ae8c64351ed6cd10d8d9b46cd9f9ee9c44688))
 
 
 ## v0.1.2 (2025-05-14)
