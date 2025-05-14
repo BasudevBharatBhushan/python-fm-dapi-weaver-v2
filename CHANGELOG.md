@@ -1,6 +1,17 @@
 # CHANGELOG
 
 
+## v0.1.6 (2025-05-14)
+
+### Bug Fixes
+
+- Udpate workflow to work on master
+  ([`abaf47f`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/abaf47fc07eee8ebcc726cb07b8fd396fa7e6a25))
+
+- Updated workflow to run on main
+  ([`7fabd12`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/7fabd12172e7c61dcdaff628a51b15399bd3b47e))
+
+
 ## v0.1.5 (2025-05-14)
 
 ### Bug Fixes
