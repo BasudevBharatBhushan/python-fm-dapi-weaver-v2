@@ -1,6 +1,9 @@
 # CHANGELOG
 
 
+## v0.1.1 (2025-05-14)
+
+
 ## v0.1.0 (2025-05-14)
 
 ### Bug Fixes
@@ -21,6 +24,9 @@ update setup file
 
 - Update setup.cfg
   ([`f03efb7`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/f03efb72d7278c84189eec94536720d0e1beb55b))
+
+- Update workflow.yml
+  ([`39e803d`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/39e803d95b5f80e8b1f319bcf90328c6f466a712))
 
 - Update workflow.yml to raise PR to main from master
   ([`aed95e6`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/aed95e6cf095dc811ccfcc9592a99aa4517719e3))
