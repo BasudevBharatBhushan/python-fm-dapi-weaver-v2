@@ -36,7 +36,7 @@ After installing the package, you can start the server by following these steps:
 To start the server, import the `start_server` function and call it as shown below:
 
 ```python
-from python-fm-dapi-weaver.main import start_server
+from python_fm_dapi_weaver.main import start_server
 
 start_server()
 
