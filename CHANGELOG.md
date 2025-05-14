@@ -1,53 +1,31 @@
+# CHANGELOG
 
-# Changelog
 
-All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## v0.1.0 (2025-05-14)
 
-## [Unreleased]
+### Bug Fixes
 
-### Added
+- Add releaseerc
+  ([`1970ac8`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/1970ac8c22c9164e76147855ebe2a8904c8534f6))
 
-- [List new features or enhancements added but not yet released]
+- Add version in init.py
+  ([`11ce3f3`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/11ce3f33ae8d513eea5229ee1ff54c233e71cfbe))
 
-### Changed
+- Update readme
+  ([`fdb655f`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/fdb655f6d68fa201bcf90c7615cedff41e60c478))
 
-- [List changes, improvements, or modifications made but not yet released]
+- Update setup file - Merge pull request #9 from CSWorldTelugu/master
+  ([`484feca`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/484fecaab3536242e846f3e65e5b4c94058f0f03))
 
-### Fixed
+update setup file
 
-- [List bug fixes or corrections made but not yet released]
+- Update setup.cfg
+  ([`f03efb7`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/f03efb72d7278c84189eec94536720d0e1beb55b))
 
-## [Version] - YYYY-MM-DD
+- Update workflow.yml to raise PR to main from master
+  ([`aed95e6`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/aed95e6cf095dc811ccfcc9592a99aa4517719e3))
 
-### Added
+### Features
 
-- [List new features or enhancements added in this version]
-
-### Changed
-
-- [List changes, improvements, or modifications made in this version]
-
-### Fixed
-
-- [List bug fixes or corrections made in this version]
-
-## [Older Versions]
-
-[Repeat the above sections for older versions of your project]
-
-## Contributing
-
-Please read [CONTRIBUTING.md](./contributing-template.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Authors
-
-- Author 1
-- Author 2
-
-## License
-
-This project is licensed under the [License Name] - see the [LICENSE.md](./license-template.md) file for details.
-
-## Customization
-
-You can customize this changelog to meet the specific needs and preferences of your project. Feel free to modify the structure, add more details, or change the formatting to better suit your project's versioning and documentation requirements.
+- Initial release
+  ([`7093c0c`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/7093c0c0e17ab7883208549989192b9988f17634))
