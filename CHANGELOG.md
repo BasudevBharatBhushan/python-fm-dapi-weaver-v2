@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.3.0 (2025-05-14)
+
+### Features
+
+- V1 release
+  ([`f818454`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/f81845470a669a45607caa3d7de299785f66bca3))
+
+
 ## v0.2.0 (2025-05-14)
 
 
