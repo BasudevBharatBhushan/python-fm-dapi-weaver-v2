@@ -13,7 +13,7 @@ A developer-friendly Python library for interacting with FileMaker Server via th
 
 ## Features
 
-- **Authentication**: Use **Basic Auth** for secure sign-in/sign-out and automatic session managements
+- **Authentication**: Use **Basic Auth** for secure sign-in/sign-out and automatic session management
 - **CRUD Operations**: Perform **Create**, **Read**, **Update**, and **Delete** on FileMaker records.
 - **File Uploads**: Upload files to FileMaker container fields using **multipart/form-data**.
 - **Error Handling**: Includes robust error handling for API requests and responses.
