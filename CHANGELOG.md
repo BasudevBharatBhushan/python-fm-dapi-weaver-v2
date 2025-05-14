@@ -1,117 +1,53 @@
-# CHANGELOG
+
+# Changelog
 
 
-## v1.0.0 (2025-05-14)
 
-### Features
+## [Unreleased]
 
-- V1 release
-  ([`5571a29`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/5571a29b11d303501ad76e5688e31891f5e481b7))
+### Added
 
-BREAKING CHANGE: This release includes major changes that warrant a 1.0.0 version bump.
+- [List new features or enhancements added but not yet released]
 
-### Breaking Changes
+### Changed
 
-- This release includes major changes that warrant a 1.0.0 version bump.
+- [List changes, improvements, or modifications made but not yet released]
 
+### Fixed
 
-## v0.3.0 (2025-05-14)
+- [List bug fixes or corrections made but not yet released]
 
-### Features
+## [Version] - YYYY-MM-DD
 
-- V1 release
-  ([`b672a84`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/b672a8466d7299287ccf9c7b1035a7632c855da6))
+### Added
 
-BREAKING CHANGE: This release includes major changes that warrant a 1.0.0 version bump.
+- [List new features or enhancements added in this version]
 
-- V1 release
-  ([`f818454`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/f81845470a669a45607caa3d7de299785f66bca3))
+### Changed
 
-### Breaking Changes
+- [List changes, improvements, or modifications made in this version]
 
-- This release includes major changes that warrant a 1.0.0 version bump.
+### Fixed
 
+- [List bug fixes or corrections made in this version]
 
-## v0.2.0 (2025-05-14)
+## [Older Versions]
 
+[Repeat the above sections for older versions of your project]
 
-## v0.1.6 (2025-05-14)
+## Contributing
 
-### Bug Fixes
+Please read [CONTRIBUTING.md](./contributing-template.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
-- Udpate workflow to work on master
-  ([`abaf47f`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/abaf47fc07eee8ebcc726cb07b8fd396fa7e6a25))
+## Authors
 
-- Updated workflow to run on main
-  ([`7fabd12`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/7fabd12172e7c61dcdaff628a51b15399bd3b47e))
+- Author 1
+- Author 2
 
-### Features
+## License
 
-- Initial-release
-  ([`c52d83e`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/c52d83e554934b8428dd3b0bf2f9cb00b6f4f5d5))
+This project is licensed under the [License Name] - see the [LICENSE.md](./license-template.md) file for details.
 
+## Customization
 
-## v0.1.5 (2025-05-14)
-
-### Bug Fixes
-
-- Update workflow
-  ([`f34bd57`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/f34bd5724941817782111dda6089021b540292e7))
-
-
-## v0.1.4 (2025-05-14)
-
-
-## v0.1.3 (2025-05-14)
-
-### Bug Fixes
-
-- Update readme
-  ([`9b3ae8c`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/9b3ae8c64351ed6cd10d8d9b46cd9f9ee9c44688))
-
-
-## v0.1.2 (2025-05-14)
-
-### Bug Fixes
-
-- Update readme
-  ([`8686199`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/8686199110eb74b222ef940f1ce400d0ccecd448))
-
-- Update readme
-  ([`abc4771`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/abc4771319e1912b51fc02255f2936fcc8092ce9))
-
-
-## v0.1.1 (2025-05-14)
-
-
-## v0.1.0 (2025-05-14)
-
-### Bug Fixes
-
-- Add releaseerc
-  ([`1970ac8`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/1970ac8c22c9164e76147855ebe2a8904c8534f6))
-
-- Add version in init.py
-  ([`11ce3f3`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/11ce3f33ae8d513eea5229ee1ff54c233e71cfbe))
-
-- Update readme
-  ([`fdb655f`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/fdb655f6d68fa201bcf90c7615cedff41e60c478))
-
-- Update setup file - Merge pull request #9 from CSWorldTelugu/master
-  ([`484feca`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/484fecaab3536242e846f3e65e5b4c94058f0f03))
-
-update setup file
-
-- Update setup.cfg
-  ([`f03efb7`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/f03efb72d7278c84189eec94536720d0e1beb55b))
-
-- Update workflow.yml
-  ([`39e803d`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/39e803d95b5f80e8b1f319bcf90328c6f466a712))
-
-- Update workflow.yml to raise PR to main from master
-  ([`aed95e6`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/aed95e6cf095dc811ccfcc9592a99aa4517719e3))
-
-### Features
-
-- Initial release
-  ([`7093c0c`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/7093c0c0e17ab7883208549989192b9988f17634))
+You can customize this changelog to meet the specific needs and preferences of your project. Feel free to modify the structure, add more details, or change the formatting to better suit your project's versioning and documentation requirements.
