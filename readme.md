@@ -1,4 +1,4 @@
-<h1 align="center">python-fm-dapi-weaver </h1><br>
+<h1 align="center">python-fm-dapi-weaver</h1><br>
 
 A developer-friendly Python library for interacting with FileMaker Server via the FileMaker Data API. Connect your apps to FileMaker databases for streamlined data management, automation, and integration
 
