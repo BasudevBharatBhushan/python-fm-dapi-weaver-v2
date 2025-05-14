@@ -1,12 +1,35 @@
 # CHANGELOG
 
 
+## v1.0.0 (2025-05-14)
+
+### Features
+
+- V1 release
+  ([`5571a29`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/5571a29b11d303501ad76e5688e31891f5e481b7))
+
+BREAKING CHANGE: This release includes major changes that warrant a 1.0.0 version bump.
+
+### Breaking Changes
+
+- This release includes major changes that warrant a 1.0.0 version bump.
+
+
 ## v0.3.0 (2025-05-14)
 
 ### Features
 
 - V1 release
+  ([`b672a84`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/b672a8466d7299287ccf9c7b1035a7632c855da6))
+
+BREAKING CHANGE: This release includes major changes that warrant a 1.0.0 version bump.
+
+- V1 release
   ([`f818454`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/f81845470a669a45607caa3d7de299785f66bca3))
+
+### Breaking Changes
+
+- This release includes major changes that warrant a 1.0.0 version bump.
 
 
 ## v0.2.0 (2025-05-14)
