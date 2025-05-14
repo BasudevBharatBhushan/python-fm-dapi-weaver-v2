@@ -18,31 +18,7 @@ jobs:
       - name: Checkout master branch
         uses: actions/checkout@v4
         with:
-          ref: master
           fetch-depth: 0
-
-      # - name: Create and push to main
-      #   run: |
-      #     git checkout -b main
-      #     git push origin main
-
-      - name: Create and push to feature branch
-        run: |
-          git checkout -b release-main
-          git push origin release-main
-
-      - name: Raise PR from release-main to main
-        uses: peter-evans/create-pull-request@v5
-        with:
-          base: main
-          head: release-main
-          title: "Automated Release PR: release-main -> main"
-          body: "This PR contains the automated changes for the release process."
-          branch: pr-release-main-to-main
-
-      - name: Checkout release branch
-        # run: git checkout main
-        run: git checkout release-main
 
       - name: Set up Python
         uses: actions/setup-python@v3
@@ -72,11 +48,11 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: twine upload dist/*
 
-      - name: Raise PR from main to master
+      - name: Raise PR from master to main
         uses: peter-evans/create-pull-request@v5
         with:
-          base: master
-          head: main
-          title: "Release PR: main -> master"
-          body: "This PR merges the changes from the main branch back into master after the release."
-          branch: pr-main-to-master
+          base: main
+          head: master
+          title: "Release PR: master -> main"
+          body: "This PR merges the changes from the master branch into main after the release."
+          branch: pr-master-to-main
