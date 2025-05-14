@@ -3,7 +3,7 @@ name: Upload Python Package
 on:
   push:
     branches:
-      - master
+      - main
 
 permissions:
   contents: write
@@ -15,7 +15,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master branch
+      - name: Checkout main branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -47,9 +47,3 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: twine upload dist/*
-
-      - name: Create PR from master to main
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh pr create --base main --head master --title "Release PR: master -> main" --body "This PR merges the changes from the master branch into main after the release."
