@@ -2,7 +2,7 @@ name: Upload Python Package
 on:
   push:
     branches:
-      - main
+      - master
 permissions:
   contents: write
   id-token: write
@@ -12,7 +12,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main branch
+      - name: Checkout master branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
