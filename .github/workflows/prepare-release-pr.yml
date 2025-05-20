@@ -32,7 +32,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           base: main
-          branch: master
+          branch: pr-main-to-master
           title: "Release PR: master -> main"
           body: "This PR merges the changes from the master branch to main branch"
           token: ${{ secrets.GITHUB_TOKEN }}
