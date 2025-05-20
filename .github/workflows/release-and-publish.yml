@@ -41,8 +41,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          semantic-release version
-          semantic-release publish
+          semantic-release version --branch release-main
+          semantic-release publish --branch release-main
 
       - name: Push release branch
         run: git push origin release-main
