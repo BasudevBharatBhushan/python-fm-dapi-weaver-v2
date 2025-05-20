@@ -1,6 +1,25 @@
 # CHANGELOG
 
 
+## v1.0.2 (2025-05-20)
+
+### Bug Fixes
+
+- Merge pull request #15 from mindfiredigital/master
+  ([`270c9c5`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/270c9c523eeae98df538cb64bba3704b12f7c187))
+
+Master
+
+- Update workflow
+  ([`982057b`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/982057b4a15988c4df4adfa47a17bc814496b35a))
+
+- Update workflow
+  ([`da117fb`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/da117fb0caee56e271693a56c1c604fa4e282270))
+
+- Update-workflow
+  ([`2ea613c`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/2ea613c03927f0b7fb8553e301e3724b085411ae))
+
+
 ## v1.0.1 (2025-05-19)
 
 ### Bug Fixes
@@ -20,6 +39,11 @@ update workflow
 
 - Update semantic config
   ([`4e21588`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/4e2158867b32a34ee2fcbe4d9a162e4f4d6ec54d))
+
+- Update workflow to trigger from main
+  ([`1de4b3a`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/1de4b3ae081de58f01282a3d512970346991fab7))
+
+fix: Update workflow to trigger from main
 
 - Update workflow.yml - trigger from master
   ([`627e9c3`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/627e9c3f7bce92e9a19b2cc84149bbe2881e71a7))
