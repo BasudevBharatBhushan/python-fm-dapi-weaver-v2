@@ -1,0 +1,24 @@
+
+[build-system]
+requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=6.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "no-local-version"
+
+[tool.semantic_release]
+version_source = "tag"
+upload_to_pypi = true
+commit = false
+push = false
+
+[tool.semantic_release.release_groups]
+default = { branches = ["release-main"] }
+
+[tool.semantic_release.publish]
+repository = "pypi"
+
+[tool.semantic_release.options]
+patch_without_tag = false
+allowed_tags = "(a|alpha|b|beta|rc)"
