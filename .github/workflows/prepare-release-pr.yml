@@ -20,11 +20,6 @@ jobs:
           ref: master
           fetch-depth: 0
 
-      # - name: Create and push to release-main
-      #   run: |
-      #     git checkout -B release-main  # -B = create or reset
-      #     git push origin release-main --force
-
       - name: Raise PR from master to main
         uses: peter-evans/create-pull-request@v7
         with:
