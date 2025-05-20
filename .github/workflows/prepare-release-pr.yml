@@ -6,29 +6,33 @@ on:
     branches:
       - master
 
-# Add this permissions block
 permissions:
   contents: write
   pull-requests: write
+  id-token: write
+  actions: write
+  packages: write
 
 jobs:
   create_release_pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout master
+        uses: actions/checkout@v4
         with:
+          ref: master
           fetch-depth: 0
-          # Add this line to use the token for authentication
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git checkout -b release-main
+
+      - name: Create and push to release-main
+        run: |
+          git checkout -B release-main  # -B = create or reset
           git push origin release-main --force
-      - uses: peter-evans/create-pull-request@v5
+
+      - name: Raise PR from release-main to main
+        uses: peter-evans/create-pull-request@v7
         with:
           base: main
-          title: "Automated Release PR: release-main -> main"
-          body: "Automated release changes."
           branch: release-main
+          title: "Release PR: release-main -> main"
+          body: "This PR merges the changes from the release-main branch to main branch"
           token: ${{ secrets.GITHUB_TOKEN }}
