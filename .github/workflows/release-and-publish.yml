@@ -34,7 +34,7 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git checkout -b release-branch
+          git checkout -b release-main
 
       - name: Run semantic-release
         env:
@@ -44,7 +44,7 @@ jobs:
           semantic-release publish
 
       - name: Push release branch
-        run: git push origin release-branch
+        run: git push origin release-main
 
       - name: Create PR to main
         env:
@@ -52,7 +52,7 @@ jobs:
         run: |
           gh pr create \
             --base main \
-            --head release-branch \
+            --head release-main \
             --title "Automated Release Updates" \
             --body "This pull request contains updates from the semantic-release process." || true
 
