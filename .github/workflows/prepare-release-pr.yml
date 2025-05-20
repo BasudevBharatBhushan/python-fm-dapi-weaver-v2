@@ -8,13 +8,30 @@ on:
 jobs:
   create-pull-request:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          ref: master
+
+      - name: Check if main and master are different
+        id: check-diff
+        run: |
+          git fetch origin main:main
+          DIFF_COUNT=$(git rev-list --count main..master)
+          echo "diff_count=$DIFF_COUNT" >> $GITHUB_OUTPUT
+          if [ "$DIFF_COUNT" -gt 0 ]; then
+            echo "Differences found between main and master. Will create PR."
+          else
+            echo "No differences found between main and master. Skipping PR creation."
+          fi
 
       - name: Create Pull Request
+        if: steps.check-diff.outputs.diff_count > 0
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
