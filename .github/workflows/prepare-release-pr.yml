@@ -19,7 +19,6 @@ jobs:
       - uses: peter-evans/create-pull-request@v5
         with:
           base: main
-          head: release-main
           title: "Automated Release PR: release-main -> main"
           body: "Automated release changes."
-          branch: pr-release-main-to-main
+          branch: release-main
