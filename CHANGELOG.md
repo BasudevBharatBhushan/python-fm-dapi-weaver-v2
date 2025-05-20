@@ -1,6 +1,68 @@
 # CHANGELOG
 
 
+## v1.0.3 (2025-05-20)
+
+### Bug Fixes
+
+- Update workflow
+  ([`bdf3bf7`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/bdf3bf7cded82ace8e79a60553bfaf2422dd44a6))
+
+- Update workflow
+  ([`db2543e`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/db2543e7db63f58f7ed78bc9ff79f86d0cf834ba))
+
+- Update workflow to raise pr from a separate branch
+  ([`6ca0473`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/6ca0473477b68f85a5dbc813ae52a4311d5d495a))
+
+- Update workflow to raise pr from master
+  ([`5de4f1c`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/5de4f1cafb9eb7f449ba61a883a768f825ef5598))
+
+- Update workflow-omit branch in pr
+  ([`05521ad`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/05521adaf82e5b99bdd41a79768c53fc2d92d3ba))
+
+- Update-readme
+  ([`72da962`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/72da9627bdd4cf7dc26ed3e71c1e86b2ab135039))
+
+- Update-workflow
+  ([`6325c19`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/6325c19defdaef71efd44d6d0d41c4a46881ca77))
+
+- Update-workflow
+  ([`8272cbe`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/8272cbeb679a122f173c92d7bc972c013461b83e))
+
+- Update-workflow
+  ([`76931b5`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/76931b5dcf0236aadcdb35bdb1faec2daf9ec3a3))
+
+- Update-workflow
+  ([`a9a2266`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/a9a22660c2bcd7efe82f4aa0e25beba0d51ceafd))
+
+- Update-workflow
+  ([`7959ccb`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/7959ccbe018a4da37eb67b23ed3f974ac6f95f88))
+
+- Update-workflow
+  ([`078d0f0`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/078d0f0e0409e792403b8f2cb28003b21d6ca8ba))
+
+- Update-workflow
+  ([`a9eab8c`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/a9eab8c01514d63d422f8dddbb385ac32ffcadf3))
+
+- Update-workflow
+  ([`74e083c`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/74e083ce6ea74cb7ae19738e33cfcbbc9574654e))
+
+- Update-workflow
+  ([`78752fb`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/78752fb51f5083a6d844857f56073ce3b4cd65c4))
+
+- Update-workflow autocreate branch in pr
+  ([`0e7a58c`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/0e7a58cad72bd6705987f1d25a1f71257c968bf3))
+
+- Update-workflow-master-main
+  ([`ec4d272`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/ec4d27245489887bc6e659954ebda15287a87985))
+
+- Update-workflow-pr-from-main
+  ([`c6656b9`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/c6656b902c3d12072ac7547928636ed639f0e79b))
+
+- Update-workflow-release-main
+  ([`ef37ca1`](https://github.com/mindfiredigital/python-fm-dapi-weaver/commit/ef37ca12c39e04b3daca7917b1ef75b6f6590aae))
+
+
 ## v1.0.2 (2025-05-20)
 
 ### Bug Fixes
