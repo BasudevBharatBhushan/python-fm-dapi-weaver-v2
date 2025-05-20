@@ -13,6 +13,7 @@ permissions:
 jobs:
   create_release_pr:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout master
         uses: actions/checkout@v4
@@ -20,15 +21,33 @@ jobs:
           ref: master
           fetch-depth: 0
 
-      - name: Create and push release-main
+      - name: Set up Git
         run: |
-          git checkout -b release-main
-          git push -f origin release-main
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
-      - name: Raise PR from release-main to main
+      - name: Fetch all branches
+        run: git fetch --all
+
+      - name: Create or update release-main from master
+        run: |
+          # Check if release-main exists on remote
+          if git show-ref --quiet refs/remotes/origin/release-main; then
+            git branch -D release-main || true
+            git checkout -b release-main origin/release-main
+          else
+            git checkout -b release-main
+          fi
+
+          git reset --hard origin/master
+          git push --force origin release-main
+
+      - name: Create PR from release-main to main
         uses: peter-evans/create-pull-request@v7
         with:
           base: main
-          title: "Release PR: release-main -> main"
-          body: "This PR merges release-main into main"
+          branch: release-main
+          title: "Release PR: release-main → main"
+          body: |
+            This PR merges the latest changes from `master` into `main` via `release-main`.
           token: ${{ secrets.GITHUB_TOKEN }}
