@@ -12,6 +12,7 @@ jobs:
     permissions:
       contents: write
       id-token: write
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -29,14 +30,31 @@ jobs:
           python -m pip install --upgrade pip
           pip install build twine python-semantic-release setuptools-scm
 
+      - name: Create release branch
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git checkout -b release-branch
+
       - name: Run semantic-release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
           semantic-release version
           semantic-release publish
+
+      - name: Push release branch
+        run: git push origin release-branch
+
+      - name: Create PR to main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base main \
+            --head release-branch \
+            --title "Automated Release Updates" \
+            --body "This pull request contains updates from the semantic-release process." || true
 
       - name: Build package
         run: python -m build
@@ -69,22 +87,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Fetch the latest from master
           git fetch origin master:refs/remotes/origin/master
-
-          # Check if there are differences between main and master
           DIFF_COUNT=$(git rev-list --count origin/master..HEAD)
-
           if [ "$DIFF_COUNT" -gt 0 ]; then
             echo "Differences found between main and master. Creating PR..."
-            
-            # Use GitHub CLI to create the PR
             gh pr create \
               --base master \
               --head main \
               --title "Sync master with main after release" \
               --body "This is an automated PR to sync changes from main back to master after a release." || true
-              
             echo "Pull request created or already exists."
           else
             echo "No differences found between main and master. Skipping PR creation."
