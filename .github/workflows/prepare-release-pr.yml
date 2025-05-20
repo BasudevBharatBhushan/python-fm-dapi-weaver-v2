@@ -1,0 +1,25 @@
+name: Prepare Release PR
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  create_release_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: |
+          git checkout -b release-main
+          git push origin release-main --force
+      - uses: peter-evans/create-pull-request@v5
+        with:
+          base: main
+          head: release-main
+          title: "Automated Release PR: release-main -> main"
+          body: "Automated release changes."
+          branch: pr-release-main-to-main
