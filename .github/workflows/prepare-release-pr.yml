@@ -20,10 +20,15 @@ jobs:
           ref: master
           fetch-depth: 0
 
-      - name: Raise PR from master to main
+      - name: Create and push release-main
+        run: |
+          git checkout -b release-main
+          git push -f origin release-main
+
+      - name: Raise PR from release-main to main
         uses: peter-evans/create-pull-request@v7
         with:
           base: main
-          title: "Release PR: master -> main"
-          body: "This PR merges the changes from the master branch to main branch"
+          title: "Release PR: release-main -> main"
+          body: "This PR merges release-main into main"
           token: ${{ secrets.GITHUB_TOKEN }}
