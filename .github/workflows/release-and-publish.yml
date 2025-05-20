@@ -40,9 +40,11 @@ jobs:
       - name: Run semantic-release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Set the branch via environment variable
+          SEMANTIC_RELEASE_BRANCH: release-main
         run: |
-          semantic-release version --branch release-main
-          semantic-release publish --branch release-main
+          semantic-release version
+          semantic-release publish
 
       - name: Push release branch
         run: git push origin release-main
