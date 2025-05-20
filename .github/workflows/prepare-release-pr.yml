@@ -9,9 +9,6 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  id-token: write
-  actions: write
-  packages: write
 
 jobs:
   create_release_pr:
@@ -32,7 +29,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           base: main
-          branch: pr-main-to-master
+          branch: master
           title: "Release PR: master -> main"
           body: "This PR merges the changes from the master branch to main branch"
           token: ${{ secrets.GITHUB_TOKEN }}
