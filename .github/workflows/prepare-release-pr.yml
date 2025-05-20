@@ -46,7 +46,6 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           base: main
-          branch: release-main
           title: "Release PR: release-main → main"
           body: |
             This PR merges the latest changes from `master` into `main` via `release-main`.
