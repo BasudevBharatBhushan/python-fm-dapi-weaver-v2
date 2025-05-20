@@ -23,16 +23,16 @@ jobs:
           ref: master
           fetch-depth: 0
 
-      - name: Create and push to release-main
-        run: |
-          git checkout -B release-main  # -B = create or reset
-          git push origin release-main --force
+      # - name: Create and push to release-main
+      #   run: |
+      #     git checkout -B release-main  # -B = create or reset
+      #     git push origin release-main --force
 
-      - name: Raise PR from release-main to main
+      - name: Raise PR from master to main
         uses: peter-evans/create-pull-request@v7
         with:
           base: main
-          branch: release-main
-          title: "Release PR: release-main -> main"
-          body: "This PR merges the changes from the release-main branch to main branch"
+          branch: master
+          title: "Release PR: master -> main"
+          body: "This PR merges the changes from the master branch to main branch"
           token: ${{ secrets.GITHUB_TOKEN }}
