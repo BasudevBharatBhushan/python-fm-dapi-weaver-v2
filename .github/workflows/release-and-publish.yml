@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install build twine python-semantic-release setuptools-scm
+          pip install build twine python-semantic-release>=9.0.0 setuptools-scm
 
       - name: Create release branch
         run: |
@@ -37,14 +37,19 @@ jobs:
           git checkout -b release-main
           git push --set-upstream origin release-main
 
-      - name: Run semantic-release
+      - name: Run semantic-release version on release-main branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Set the branch via environment variable
-          SEMANTIC_RELEASE_BRANCH: release-main
         run: |
-          semantic-release version
-          semantic-release publish
+          semantic-release --verbose version
+
+      # For semantic-release 9.x, the publish command needs to be run separately
+      - name: Run semantic-release publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          semantic-release --verbose publish
 
       - name: Push release branch
         run: git push origin release-main
@@ -59,46 +64,13 @@ jobs:
             --title "Automated Release Updates" \
             --body "This pull request contains updates from the semantic-release process." || true
 
-      - name: Build package
-        run: python -m build
-
-      - name: Publish package to PyPI
+      # This is only needed if semantic-release publish didn't handle the PyPI upload
+      - name: Build and publish package to PyPI if needed
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: twine upload dist/*
-#   create-pr-back-to-master:
-#     needs: release
-#     runs-on: ubuntu-latest
-#     permissions:
-#       contents: write
-#       pull-requests: write
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v3
-#         with:
-#           fetch-depth: 0
-#           ref: main
-
-#       - name: Set Git Identity
-#         run: |
-#           git config --global user.name 'GitHub Actions'
-#           git config --global user.email 'github-actions@github.com'
-
-#       - name: Create Pull Request from main to master
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         run: |
-#           git fetch origin master:refs/remotes/origin/master
-#           DIFF_COUNT=$(git rev-list --count origin/master..HEAD)
-#           if [ "$DIFF_COUNT" -gt 0 ]; then
-#             echo "Differences found between main and master. Creating PR..."
-#             gh pr create \
-#               --base master \
-#               --head main \
-#               --title "Sync master with main after release" \
-#               --body "This is an automated PR to sync changes from main back to master after a release." || true
-#             echo "Pull request created or already exists."
-#           else
-#             echo "No differences found between main and master. Skipping PR creation."
-#           fi
+        run: |
+          if [ ! -f "dist/*" ]; then
+            python -m build
+            twine upload dist/*
+          fi
