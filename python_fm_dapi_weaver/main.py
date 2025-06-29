@@ -1,10 +1,20 @@
 from fastapi import FastAPI, APIRouter,HTTPException,UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import Response
 from .routes.index import router
 import json
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or ["http://localhost:8000"] for stricter rules
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 app.include_router(router, prefix="/api")
 
