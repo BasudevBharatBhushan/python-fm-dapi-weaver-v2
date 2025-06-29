@@ -321,8 +321,9 @@ async def upload_container(req: Request):
 async def fetch_layouts(req: Request):
     data = req.state.body
     token =   req.state.fmSessionToken
+    method_body = data.get("methodBody", {})
     fm_server = data.get("fmServer")
-    database = data.get("database")
+    database = method_body.get("database")
 
     validate_required_params({
         "fmSessionToken": token,
@@ -347,3 +348,37 @@ async def fetch_layouts(req: Request):
         
     except requests.HTTPError as e:
         raise handle_api_error(e,"An error occurred while fetching the layouts.")
+    
+async def fetch_layout_metadata(req: Request):
+    data = req.state.body
+    token =   req.state.fmSessionToken
+    fm_server = data.get("fmServer")
+    method_body = data.get("methodBody", {})
+
+    database = method_body.get("database")
+    layout = method_body.get("layout")
+
+    validate_required_params({
+        "fmSessionToken": token,
+        "fmServer": fm_server,
+        "database": database,
+        "layout": layout
+    })
+
+    apiUrl = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/layouts/{layout}"
+
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+
+    try:
+        response = requests.get(apiUrl, headers=headers, verify=False)
+        response.raise_for_status()
+        json_data = response.json()
+        return {
+            "layoutMetadata": json_data["response"]["layout"],
+            "session": token
+        }
+        
+    except requests.HTTPError as e:
+        raise handle_api_error(e,"An error occurred while fetching the layout metadata.")
