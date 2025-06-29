@@ -7,7 +7,8 @@ from .records import (
     update_record,
     delete_record,
     upload_container,
-    fetch_layouts
+    fetch_layouts,
+    fetch_layout_metadata
 )
 
 # List of method names that do not require token/session validation.
@@ -24,7 +25,8 @@ METHOD_HANDLERS = {
     "signin": signin,
     "signout" : signout,
     "uploadContainer":upload_container,
-    "fetchLayouts": fetch_layouts
+    "fetchLayouts": fetch_layouts,
+    "fetchLayoutMetadata": fetch_layout_metadata
     
 }
 
