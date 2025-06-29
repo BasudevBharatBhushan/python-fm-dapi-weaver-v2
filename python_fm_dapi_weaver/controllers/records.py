@@ -318,3 +318,32 @@ async def upload_container(req: Request):
 
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
+async def fetch_layouts(req: Request):
+    data = req.state.body
+    token =   req.state.fmSessionToken
+    fm_server = data.get("fmServer")
+    database = data.get("database")
+
+    validate_required_params({
+        "fmSessionToken": token,
+        "fmServer": fm_server,
+        "database": database
+    })
+
+    apiUrl = f"https://{fm_server}/fmi/data/vLatest/databases/{database}/layouts"
+
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+
+    try:
+        response = requests.get(apiUrl, headers=headers, verify=False)
+        response.raise_for_status()
+        json_data = response.json()
+        return {
+            "layouts": json_data["response"]["layouts"],
+            "session": token
+        }
+        
+    except requests.HTTPError as e:
+        raise handle_api_error(e,"An error occurred while fetching the layouts.")
