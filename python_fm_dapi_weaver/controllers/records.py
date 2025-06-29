@@ -376,7 +376,7 @@ async def fetch_layout_metadata(req: Request):
         response.raise_for_status()
         json_data = response.json()
         return {
-            "layoutMetadata": json_data["response"]["layout"],
+            "layoutMetadata": json_data["response"]["fieldMetaData"],
             "session": token
         }
         
