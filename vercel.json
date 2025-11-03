@@ -1,4 +1,6 @@
 {
-  "builds": [{ "src": "index.py", "use": "@vercel/python" }],
+  "runtime": "python3.11",
+  "buildCommand": "",
+  "installCommand": "pip install -r requirements.txt",
   "routes": [{ "src": "/(.*)", "dest": "index.py" }]
 }
