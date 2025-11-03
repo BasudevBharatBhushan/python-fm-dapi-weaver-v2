@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request, Response
-from .auth import validate_session, validate_token,signin,signout
-from .records import (
+from controllers.auth import validate_session, validate_token,signin,signout
+from controllers.records import (
     create_record,
     get_all_records,
     find_record,

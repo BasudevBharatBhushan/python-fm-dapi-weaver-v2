@@ -2,7 +2,7 @@ import requests
 import json
 import base64
 from fastapi import APIRouter, HTTPException, Request, UploadFile, File, Form
-from ..utils.helpers import handle_api_error,validate_required_params
+from utils.helpers import handle_api_error,validate_required_params
 
 async def create_record(req: Request):
     data = req.state.body

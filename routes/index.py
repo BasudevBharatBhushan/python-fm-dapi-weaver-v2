@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, Response
-from ..controllers.index import data_api
+from controllers.index import data_api
 
 router = APIRouter()
 
